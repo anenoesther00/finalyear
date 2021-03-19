@@ -1,8 +1,7 @@
 <?php
-require_once 'DBaseController.php';
+require_once 'C:\wamp64\www\HRently\app\Http\Controllers\DBaseController.php';
 
-
-class CUSTOMER{
+class submitproperty{
     private $db_connection;
     // constructor to initialise connection
     public function __construct()
@@ -10,32 +9,40 @@ class CUSTOMER{
         $this->db_connection= new DBaseController();
     }
     
-//insert function to register a customer
-public function signUp($Name,$Email,$password,$confirm_password){
- $query = "insert into signup(Name,Email,password,Confirm_password) values(?,?,?,?)";
- $paramtype = "ssss";
- $parameters = array($Name,$Email,$password,$confirm_password);
- $this->db_connection->insert($query,$paramtype,$parameters);
+public function submitproperty($submitproperty_id,$firstname,$lastname,$typeofrental,$price, $photo, $contact, $description){
+$query = "INSERT INTO submitproperty(submitproperty_id, firstname, lastname, typeofrental, price, photo, contact, description) VALUES (?,?,?,?,?,?,?,?)";
+$paramtype = "issiiiis";
+$parameters = array($submitproperty_id,$firstname,$lastname,$typeofrental,$price, $photo, $contact, $description);
+$this->db_connection->insert($query,$paramtype,$parameters);
 }
 
-//insert function to login customer
-public function login($Name,$password){
-    $query = "insert into customer (Name,password)values (?,?)";
-    $paramtype = "ss";
-    $parameters = array($Name,$password);
-     $this->db_connection->insert($query,$paramtype,$parameters);
 
+public function cancelproperty($submitproperty_id){
+    $query = "delete from submitproperty where submitproperty_id=?";
+    $paramtype = "i";
+    $parameters =array($submitproperty_id);
+   $this->db_connection->runQuery($query,$paramtype,$parameters);
 }
 
-//update function to edit the profile of a customer
-public function editProfile($Name,$Contact,$email,$password,$confirm_password,$photo,$customer_id){
-    $query = "UPDATE customer SET Name=?,Contact=?,email=?,password=?,confirm_password=?,photo=? WHERE customer_id=?";
-    $paramtype = "ssssss";
-    $parameters = array($Name,$Contact,$email,$password,$confirm_password,$photo,$customer_id);
-    $edit= $this->db_connection->update($query,$paramtype,$parameters);
-    var_dump($parameters);
+
+ public function changeproperty($submitproperty_id,$firstname,$lastname,$typeofrental,$price,$photo,$contact,$description){
+    $query = "UPDATE submitproperty SET firstname=?,lastname=?,typeofrental=?,price=?,photo=?,contact=?,description=?, WHERE submitproperty_id=?";
+    $paramtype = "issiiiis";
+    $parameters = array($submitproperty_id,$firstname,$lastname,$typeofrental,$price,$photo,$contact,$description);
+  $edit= $this->db_connection->update($query,$paramtype,$parameters);
+   var_dump($edit);
     return $edit;
 }
 
+public function propertyInfo($submitproperty_id){
+    $query = "SELECT * FROM submitproperty WHERE submitproperty_id";
+    $paramtype = "i";
+    $parameters = array($submitproperty_id);
+  $result = array(
+            'num_rows' => $this->db_connection->runForRows($query,$paramtype,$parameters),
+            'data' => $this->db_connection->runQuery($query,$paramtype,$parameters)
+        );
+  var_dump($parameters);
+   return $result;
 }
-
+}

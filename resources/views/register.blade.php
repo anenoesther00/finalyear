@@ -7,9 +7,7 @@
     <?php
     include "../include/css_template.php";
     ?>
-    <?php
-     include "../include/navbar_templates.php";
-    ?>
+   
     <body>  
     
 
@@ -21,11 +19,10 @@
                   <div class="card-header mb-3 bg-success col-sm-hidden">
                   <h5 class="h4 h4-responsive card-title text-light text-center">Sign up </h5>
                 </div>
-                    
-                    <?php
-                        require_once 'Controllers/bus_controller.php';
-                        $usernameErr=$emailErr=$passErr=$numerr=$campanyerr=$confirmErr=$contanctErr="";
-                        $username=$email=$contact=$number=$campany=$password=$confirm="";
+                <?php
+                        require_once '../Controllers/UserController.php';
+                        $NameErr;$EmailErr;$passwordErr;$confirm_password;"";
+                        $Name;$Email;$password;$confirm_password;"";
                          if(isset($_POST['signup'])){
 //                             echo "You Are Ready to bgin Validation";
                              if(empty($_POST['userName'])){
@@ -38,37 +35,29 @@
                              }else{
                                  $email=$_POST['userEmail'];
                              }
-                             if(empty($_POST['userContact'])){
+                              if(empty($_POST['userContact'])){
                                  $contanctErr="Enter Contact";
                              }else{
                                  $contact=$_POST['userContact'];
-                             }
-                             if(empty($_POST['number'])){
-                                 $numerr="Enter number of buses owned";
-                             }else{
-                                 $number=$_POST['number'];
-                             }
-                             if(empty($_POST['userCampany'])){
-                                 $campanyerr="Enter Camapany Name";
-                             }else{
-                                 $campany_POST['userCampany'];
                              }
                              if(empty($_POST['userPassword'])){
                                  $passErr="Enter strong password";
                              }else{
                                  $password=$_POST['userPassword'];
                              }
-                                                    
-                             if(!empty($username)&& !empty($email) && !empty($contact)&& !empty($number)&& !empty($campany)&& !empty($password)){
+                            
+                             
+                             if(!empty($username)&& !empty($email) && !empty($contact) && !empty($password)){
                                  //Start the Databases Conecttivity and operations
                                  ///Create an object for the class of interest
-                                $owner = new BusOwner();
+                                $customer = new CUSTOMER();
                                 //Through the object Call the uction from your controller
                                 //should be the same name as e form name
-                                $owner->signUp($username, $email, $contact,$number,$campany, $password, $confirm);
+                                $customer->signUp($username,$contact,$email,$password,$confirm);
                              }
                          }
-                         ?>//
+//                         $username=$email=$password=$confirm=$contact=
+                              ?>  
                 <form action="login.php" class="card-body" method="POST">
                 <div style="background-color:white">
               <div class = card-body>

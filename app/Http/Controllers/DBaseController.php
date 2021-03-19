@@ -9,8 +9,8 @@
 class DBaseController {
     private $host = "localhost";
     private $user = "root";
-    private $password = "";
-    private $database = "hrs";
+    private $password = "Housings1";
+    private $database = "hrently";
     private $conn;
     //Initialise the Connection
     function __construct() {
